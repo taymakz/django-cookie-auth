@@ -148,7 +148,8 @@ class AccountUserAuthenticationCheckView(APIView):
                     "section": AccountUserAuthenticateCheckSectionEnum.OTP.value,
                 },
                 status=status.HTTP_200_OK,
-                message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone),
+                message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone)
+                + f" - کد: {otp_service.code}",
             )
 
         # If user exists and has a usable password, use password authentication
@@ -173,7 +174,7 @@ class AccountUserAuthenticationCheckView(APIView):
                 "section": AccountUserAuthenticateCheckSectionEnum.OTP.value,
             },
             status=status.HTTP_200_OK,
-            message=ResponseMessage.SUCCESS.value,
+            message=ResponseMessage.SUCCESS.value + f" - کد: {otp_service.code}",
         )
 
 
@@ -224,7 +225,6 @@ class AccountUserAuthenticateOTPView(APIView):
         )
         if created:
             user.handle_creation()
-
 
         # Mark OTP as used
         otp_service.is_used = True
@@ -320,7 +320,8 @@ class AccountUserForgotPasswordCheckView(APIView):
         otp_service.send_otp()
         return BaseResponse(
             status=status.HTTP_200_OK,
-            message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone),
+            message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone)
+            + f" - کد: {otp_service.code}",
         )
 
 

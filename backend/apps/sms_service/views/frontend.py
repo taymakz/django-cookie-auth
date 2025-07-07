@@ -38,11 +38,11 @@ class VerificationRequestOTPView(APIView):
         otp_service = (
             VerifyOTPService.objects.only(
                 "id",
-                "type",
                 "to",
                 "usage",
+                "code",
             )
-            .filter(phone=phone, usage=otp_usage, is_used=False)
+            .filter(to=phone, usage=otp_usage, is_used=False)
             .order_by("-id")
             .first()
         )
@@ -50,7 +50,8 @@ class VerificationRequestOTPView(APIView):
         if otp_service and not otp_service.is_expired():
             return BaseResponse(
                 status=status.HTTP_200_OK,
-                message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone),
+                message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone)
+                + f" - کد: {otp_service.code}",
             )
 
         # If OTP service exists but is expired, delete it
@@ -58,10 +59,11 @@ class VerificationRequestOTPView(APIView):
             otp_service.delete()
 
         # Create a new OTP service and send the OTP
-        new_otp_service = VerifyOTPService.objects.create(phone=phone, usage=otp_usage)
+        new_otp_service = VerifyOTPService.objects.create(to=phone, usage=otp_usage)
         new_otp_service.send_otp()
 
         return BaseResponse(
             status=status.HTTP_200_OK,
-            message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone),
+            message=ResponseMessage.PHONE_OTP_SENT.value.format(phone=phone)
+            + f" - کد: {new_otp_service.code}",
         )
