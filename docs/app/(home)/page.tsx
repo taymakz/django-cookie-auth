@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import { ArrowRightIcon, ShieldCheckIcon, KeyIcon, PhoneIcon, UserIcon } from 'lucide-react';
+import { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'Django Cookie Auth',
+  
+};
 export default function HomePage() {
   return (
     <main className="flex flex-1 flex-col pt-10">
@@ -34,7 +39,7 @@ export default function HomePage() {
               Get Started
               <ArrowRightIcon className="ml-2 h-4 w-4" />
             </Link>
-       
+
           </div>
 
           {/* Feature Grid */}
