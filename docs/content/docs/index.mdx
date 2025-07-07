@@ -1,6 +1,7 @@
 ---
-title: API Overview
+title: Quick Start
 description: Complete guide to the Django Backend APIs
+icon: Album
 ---
 
 # API Documentation
@@ -94,3 +95,68 @@ Errors are returned with appropriate HTTP status codes and Persian error message
 ## Rate Limiting
 
 API endpoints may be rate-limited to prevent abuse. Check response headers for rate limit information.
+
+
+## Backend Setup
+
+1. **Clone and Navigate**
+  ```bash
+  git clone https://github.com/taymakz/django-cookie-auth.git
+  cd django-cookie-auth/backend
+  ```
+
+2. **Create Virtual Environment**
+
+  - **On Windows:**
+    ```bash
+    py -m venv venv
+    venv\Scripts\activate
+    ```
+  - **On macOS/Linux:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3. **Install Dependencies**
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+4. **Environment Setup**
+  ```bash
+  # Create .env file
+  cp .env.example .env
+  # Edit .env with your settings
+  ```
+
+5. **Database Setup**
+  ```bash
+  python manage.py migrate
+  ```
+
+6. **Run Development Server**
+  ```bash
+  python manage.py runserver
+  ```
+
+The API will be available at `http://localhost:8000/api/`
+
+### Quick Test
+
+Test the API is working:
+
+```bash
+curl http://localhost:8000/api/account/authenticate/check/ \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"phone": "09123456789"}'
+```
+
+## Repository
+
+This project is open source and available on GitHub:
+
+**🔗 [django-cookie-auth](https://github.com/taymakz/django-cookie-auth)**
+
+For issues, contributions, or detailed setup instructions, visit the repository.
