@@ -1,4 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { GithubIcon } from 'lucide-react';
 
 /**
  * Shared layout configurations
@@ -24,5 +25,13 @@ export const baseOptions: BaseLayoutProps = {
     ),
   },
   // see https://fumadocs.dev/docs/ui/navigation/links
-  links: [],
+  links: [
+      {
+      type: 'icon',
+      label: 'Visit Github', // `aria-label`
+      icon: <GithubIcon />,
+      text: 'Github',
+      url: 'https://github.com/taymakz/django-cookie-auth',
+    },
+  ],
 };
