@@ -1,0 +1,96 @@
+---
+title: API Overview
+description: Complete guide to the Django Backend APIs
+---
+
+# API Documentation
+
+Welcome to the comprehensive API documentation for our Django-based authentication system. This documentation covers all available endpoints, request/response formats, and usage examples.
+
+## Base URL
+
+All API endpoints are prefixed with:
+
+```
+http://localhost:8000/api/
+```
+
+## Quick Reference
+
+A comprehensive quick reference for all available API endpoints and their usage.
+
+## Endpoints Overview
+
+| Method | Endpoint                                           | Description             | Auth Required |
+| ------ | -------------------------------------------------- | ----------------------- | ------------- |
+| `POST` | `/api/account/authenticate/check/`                 | Check user existence    | ❌            |
+| `POST` | `/api/account/authenticate/password/`              | Login with password     | ❌            |
+| `POST` | `/api/account/authenticate/otp/`                   | Login/register with OTP | ❌            |
+| `POST` | `/api/account/authenticate/token-refresh/`         | Refresh JWT token       | ❌            |
+| `GET`  | `/api/account/authenticate/current/`               | Get current user        | ✅            |
+| `POST` | `/api/account/authenticate/logout/`                | Logout user             | ✅            |
+| `POST` | `/api/account/authenticate/forget-password/check/` | Start password reset    | ❌            |
+| `POST` | `/api/account/authenticate/forget-password/otp/`   | Verify reset OTP        | ❌            |
+| `POST` | `/api/account/authenticate/forget-password/reset/` | Reset password          | ❌            |
+
+## Response Format
+
+All API responses follow a consistent format:
+
+```json
+{
+  "success": true
+  "status": 200,
+  "data": null,
+  "message": "عملیات با موفقیت انجام شد",
+}
+```
+
+### Common TypeScript Interfaces
+
+```ts
+// Base API response format
+export interface ApiResponseType<T> {
+  success: boolean;
+  status: number;
+  data: T;
+  message?: string;
+}
+
+// User data structure
+export interface User {
+  id: number;
+  phone: string;
+  first_name?: string;
+  last_name?: string;
+  has_password: boolean;
+  created_at: string;
+  updated_at: string;
+}
+```
+
+### Standard HTTP Status Codes
+
+| Code  | Description           |
+| ----- | --------------------- |
+| `200` | Success               |
+| `400` | Bad Request           |
+| `401` | Unauthorized          |
+| `403` | Forbidden             |
+| `404` | Not Found             |
+| `500` | Internal Server Error |
+
+## Error Handling
+
+Errors are returned with appropriate HTTP status codes and Persian error messages:
+
+```json
+{
+  "message": "خطایی در انجام عملیات رخ داده است",
+  "status": 400
+}
+```
+
+## Rate Limiting
+
+API endpoints may be rate-limited to prevent abuse. Check response headers for rate limit information.
