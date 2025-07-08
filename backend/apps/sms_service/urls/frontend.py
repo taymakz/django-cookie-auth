@@ -1,6 +1,6 @@
 from django.urls import path
 
-from sms_service.views import frontend
+from apps.sms_service.views import frontend
 
 app_name = "sms_service_front"
 
